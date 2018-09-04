@@ -19,6 +19,8 @@ public class UidGenerator {
         if(!counters.containsKey(prefix)){
             counters.put(prefix, 100);
         }
+        int x = counters.get(prefix);
+        counters.put(prefix, x+1);
         return prefix + "_" + counters.get(prefix);
     }
     
