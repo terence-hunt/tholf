@@ -11,4 +11,7 @@ package com.tholf.player;
  */
 public class HumanPlayer extends Player {
     
+    String address;
+    double handicap;
+    
 }

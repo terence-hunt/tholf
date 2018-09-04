@@ -20,8 +20,7 @@ public abstract class Player implements UID {
     private String UID;
     String username;
     String name;
-    String address;
-    double handicap;
+
     
     
     public Player(){
