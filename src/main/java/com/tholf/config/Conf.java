@@ -18,25 +18,27 @@ import java.util.logging.Logger;
  * Based on https://www.baeldung.com/java-properties
  */
 public enum Conf {
-    DEFAULT("/path/to/defualt/config"); // This will be part of the build
-    //this will be on the file system avalile to people that need to change settings. 
-    //this will be on the file system avalile to people that need to change settings.
+    GENERAL("conf/general.properties","/path/to/defualt/general.properties.that can be overriden by user"),
+    PLAYER("conf/player.properties", "/path/to/defualt/player.properties.that can be overriden by user"),
+    COURSE("conf/course.properties", "/path/to/defualt/course.properties.that can be overriden by user"),
+    SCORING("conf/scoring.properties", "/path/to/defualt/scoring.properties.that can be overriden by user"); // This will be part of the build
+
     private static final Logger LOG = Logger.getLogger(Conf.class.getName());
+    Properties defaultProps;
     
-    
-    Conf(String filePath) {
+    Conf(String properties, String overrideProperties) {
         FileInputStream in = null;
         try {
             //read config file
-            Properties defaultProps = new Properties();
-            in = new FileInputStream(filePath);
+            defaultProps = new Properties();
+            in = new FileInputStream(properties);
             defaultProps.load(in);
             in.close();
             // create application properties with default
             Properties applicationProps = new Properties(defaultProps);
             // now load properties 
             // from last invocation
-            in = new FileInputStream("appProperties");
+            in = new FileInputStream(overrideProperties);
             applicationProps.load(in);
             in.close();
         } catch (FileNotFoundException ex) {
@@ -50,6 +52,10 @@ public enum Conf {
                 Logger.getLogger(Conf.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public String get(String key){
+        return defaultProps.getProperty(key);
     }
 
 }
