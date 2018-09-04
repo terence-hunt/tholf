@@ -11,14 +11,14 @@ package com.tholf.player;
  */
 public class PlayerFromDB implements PlayerFactory {
 
-    public String uid;
+    public String id;
 
-    public PlayerFromDB(String uid) {
-        this.uid = uid;
+    public PlayerFromDB(String id) {
+        this.id = id;
     }
 
     public Player create() {
-        //Lookup uid in the database and create the player object from that
+        //Is the id the userid or the username.
         return new HumanPlayer();
         
     }

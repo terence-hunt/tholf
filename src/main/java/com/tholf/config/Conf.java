@@ -18,10 +18,10 @@ import java.util.logging.Logger;
  * Based on https://www.baeldung.com/java-properties
  */
 public enum Conf {
-    GENERAL("conf/general.properties","/path/to/defualt/general.properties.that can be overriden by user"),
-    PLAYER("conf/player.properties", "/path/to/defualt/player.properties.that can be overriden by user"),
-    COURSE("conf/course.properties", "/path/to/defualt/course.properties.that can be overriden by user"),
-    SCORING("conf/scoring.properties", "/path/to/defualt/scoring.properties.that can be overriden by user"); // This will be part of the build
+    GENERAL("conf/general.properties","/etc/defaults/wildfly/general.properties"),
+    PLAYER("conf/player.properties", "/etc/defaults/wildfly/player.properties"),
+    COURSE("conf/course.properties", "/etc/defaults/wildfly/course.properties"),
+    SCORING("conf/scoring.properties", "/etc/defaults/wildfly/scoring.properties"); 
 
     private static final Logger LOG = Logger.getLogger(Conf.class.getName());
     Properties defaultProps;
@@ -54,8 +54,20 @@ public enum Conf {
         }
     }
     
-    public String get(String key){
-        return defaultProps.getProperty(key);
+    /**
+     * Will return the value if it is in default props, it does not
+     * exist it will return the default
+     * @param key the key being looked up
+     * @param def this will be returned if the value for the key does 
+     * not exist.
+     * 
+     */
+    public String get(String key, String def){
+        String value = def;
+        if(defaultProps.contains(key)){
+            value = defaultProps.getProperty(key);
+        }
+        return value;
     }
 
 }

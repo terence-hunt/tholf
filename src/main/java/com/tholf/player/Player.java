@@ -14,8 +14,15 @@ import com.tholf.util.UidGenerator;
  * @author thunt
  */
 public abstract class Player implements UID {
+    
+    private static final String prefix = Conf.PLAYER.get("prefix","PLAYER");
+    
     private String UID;
-    private static final String prefix = Conf.PLAYER.get("prefix");
+    String username;
+    String name;
+    String address;
+    double handicap;
+    
     
     public Player(){
         UidGenerator.generateUid(prefix);

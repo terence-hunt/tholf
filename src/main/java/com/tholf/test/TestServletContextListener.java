@@ -30,6 +30,10 @@ public class TestServletContextListener implements ServletContextListener{
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		LOG.log(Level.FINE,"Test Servlet context listener is being started");	
+                //This is how you load an existing player. 
                 Player p = PlayerFactoryMgr.getPlayerFactory("U0001").create();
+                
+                // this is how you create a new player. 
+                Player p1 = PlayerFactoryMgr.getPlayerFactory("terence.hunt", "Terry", 12, "20 collingwood drive", "m").create();
 	}
 }
