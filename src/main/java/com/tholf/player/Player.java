@@ -13,7 +13,7 @@ import com.tholf.util.UidGenerator;
  *
  * @author thunt
  */
-public class Player implements UID {
+public abstract class Player implements UID {
     private String UID;
     private static final String prefix = Conf.PLAYER.get("prefix");
     
