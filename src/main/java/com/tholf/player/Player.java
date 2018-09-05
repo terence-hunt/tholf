@@ -9,6 +9,7 @@ import com.tholf.config.Conf;
 import com.tholf.config.PlayerKeys;
 import com.tholf.util.UID;
 import com.tholf.util.UidGenerator;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,6 +21,7 @@ public abstract class Player implements UID {
 
     String uid;
     String name;
+    PlayerDao dao;
 
     protected final void generateUid() {
         if (uid == null) {
@@ -30,6 +32,15 @@ public abstract class Player implements UID {
     @Override
     public String getUid() {
         return uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) throws SQLException {
+        this.name = name;
+        dao.updatePlayer(this);
     }
     
     @Override

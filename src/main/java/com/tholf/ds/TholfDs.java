@@ -6,6 +6,7 @@
 package com.tholf.ds;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,6 +43,13 @@ public class TholfDs {
         try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);
             return conn.prepareStatement(sql);
+        }
+    }
+    
+    public DatabaseMetaData getMetaData() throws SQLException{
+        try (Connection conn = ds.getConnection()) {
+            conn.setAutoCommit(false);
+            return conn.getMetaData();
         }
     }
 }

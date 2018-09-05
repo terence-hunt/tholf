@@ -5,11 +5,7 @@
  */
 package com.tholf.player;
 
-import com.tholf.config.Conf;
-import com.tholf.config.PlayerKeys;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.sql.SQLException;
 
 /**
  *
@@ -22,6 +18,7 @@ public class HumanPlayer extends Player {
     double handicap;
     String sex;
     String email;
+ 
 
     public HumanPlayer(String username, String name, String address, double handicap, String sex, String email) {
         this(null, username, name, address, handicap, sex, email);
@@ -36,51 +33,44 @@ public class HumanPlayer extends Player {
         this.address = address;
         this.handicap = handicap;
         this.sex = sex;
+        
+        dao = new HumanPlayerDaoImpl();
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username) throws SQLException {
         this.username = username;
-        PlayerMgr.updatePlayer(this);
+        dao.updatePlayer(this);
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address) throws SQLException {
         this.address = address;
-        PlayerMgr.updatePlayer(this);
+        dao.updatePlayer(this);
     }
 
     public double getHandicap() {
         return handicap;
     }
 
-    public void setHandicap(double handicap) {
+    public void setHandicap(double handicap) throws SQLException {
         this.handicap = handicap;
-        PlayerMgr.updatePlayer(this);
+        dao.updatePlayer(this);
     }
 
     public String getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(String sex) throws SQLException {
         this.sex = sex;
-        PlayerMgr.updatePlayer(this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        PlayerMgr.updatePlayer(this);
+        dao.updatePlayer(this);
     }
 
     public String getEmail() {

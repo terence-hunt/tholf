@@ -20,23 +20,20 @@ import java.util.Map;
  *
  * @author thunt
  */
-public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
+public class RobotPlayerDaoImpl implements PlayerDao<RobotPlayer> {
 
-    private static final String playerTableSQL
-            = "SELECT uid,username,name,address,handicap,sex,email from " + Conf.PLAYER.getString(PlayerKeys.playerTable);
+    private static final String robotTableSQL
+            = "SELECT uid,name,skillLevel from " + Conf.PLAYER.getString(PlayerKeys.robotTable);
     TholfDs ds = new TholfDs();
 
     @Override
-    public void updatePlayer(HumanPlayer p) throws SQLException {
+    public void updatePlayer(RobotPlayer p) throws SQLException {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", p.getName());
-        map.put("address", p.getAddress());
-        map.put("handicap", String.valueOf(p.getHandicap()));
-        map.put("sex", p.getSex());
-        map.put("email", p.getEmail());
+        map.put("skillLevel", String.valueOf(p.getSkillLevel()));
 
         StringBuilder sb = new StringBuilder("UPDATE ");
-        sb.append(Conf.PLAYER.getString(PlayerKeys.playerTable));
+        sb.append(Conf.PLAYER.getString(PlayerKeys.robotTable));
         sb.append(" set ");
 
         Iterator it = map.entrySet().iterator();
@@ -56,9 +53,9 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
     }
 
     @Override
-    public void deletePlayer(HumanPlayer p) throws SQLException {
+    public void deletePlayer(RobotPlayer p) throws SQLException {
         StringBuilder sb = new StringBuilder("DELETE from ");
-        sb.append(Conf.PLAYER.getString(PlayerKeys.playerTable));
+        sb.append(Conf.PLAYER.getString(PlayerKeys.robotTable));
         sb.append(" WHERE uid = '");
         sb.append(p.getUid());
         sb.append("'");
@@ -68,7 +65,7 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
 
     @Override
     public Player getPlayer(String uid) throws SQLException {
-        StringBuilder sb = new StringBuilder(playerTableSQL);
+        StringBuilder sb = new StringBuilder(robotTableSQL);
         sb.append(" WHERE uid = '");
         sb.append(uid);
         sb.append("'");
@@ -77,30 +74,23 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
     }
 
     @Override
-    public List<HumanPlayer> getAllPlayers() throws SQLException {
-        StringBuilder sb = new StringBuilder(playerTableSQL);
+    public List<RobotPlayer> getAllPlayers() throws SQLException {
+        StringBuilder sb = new StringBuilder(robotTableSQL);
         sb.append(PlayerKeys.playerTable);
-
         ResultSet rs = ds.executeQuery(sb.toString());
-
-        List<HumanPlayer> l = new ArrayList<>();
-
+        List<RobotPlayer> l = new ArrayList<>();
         while (rs.next()) {
             l.add(buildPlayer(rs));
         }
         return l;
     }
 
-    private HumanPlayer buildPlayer(ResultSet rs) throws SQLException {
+    private RobotPlayer buildPlayer(ResultSet rs) throws SQLException {
         String uid = rs.getString(0);
-        String username = rs.getString(1);
-        String name = rs.getString(2);
-        String address = rs.getString(3);
-        double handicap = rs.getDouble(4);
-        String sex = rs.getString(5);
-        String email = rs.getString(6);
+        String name = rs.getString(1);
+        double skillLevel = rs.getDouble(2);
 
-        return new HumanPlayer(uid, username, name, address, handicap, sex, email);
+        return new RobotPlayer(uid, name, skillLevel);
     }
 
 }
