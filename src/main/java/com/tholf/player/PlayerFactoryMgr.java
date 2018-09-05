@@ -14,8 +14,8 @@ public class PlayerFactoryMgr {
         return new PlayerFromDB(uid);
     }
     
-    public static PlayerFactory getPlayerFactory(String username, String name, double handicap, String address, String sex){
-        return new NewPlayerFactory(username, name, handicap, address, sex);
+    public static PlayerFactory getPlayerFactory(String username, String name, double handicap, String address, String sex, String email){
+        return new NewPlayerFactory(username, name, handicap, address, sex, email);
     }
     
 }

@@ -10,8 +10,7 @@ package com.tholf.util;
  * @author thunt
  */
 public interface UID {
-    
-    public String getUID();
-    
-    
+
+    public String getUid();
+
 }

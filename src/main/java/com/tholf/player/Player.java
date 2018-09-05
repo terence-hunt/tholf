@@ -6,6 +6,7 @@
 package com.tholf.player;
 
 import com.tholf.config.Conf;
+import com.tholf.config.PlayerKeys;
 import com.tholf.util.UID;
 import com.tholf.util.UidGenerator;
 
@@ -14,22 +15,32 @@ import com.tholf.util.UidGenerator;
  * @author thunt
  */
 public abstract class Player implements UID {
-    
-    private static final String prefix = Conf.PLAYER.get("prefix","PLAYER");
-    
-    private String UID;
-    String username;
+
+    private static final String prefix = Conf.PLAYER.getString(PlayerKeys.prefix);
+
+    String uid;
     String name;
 
-    
-    
-    public Player(){
-        UidGenerator.generateUid(prefix);
+    protected final void generateUid() {
+        if (uid == null) {
+            uid = UidGenerator.generateUid(prefix);
+        }
     }
 
     @Override
-    public String getUID() {
-        return UID;
+    public String getUid() {
+        return uid;
     }
     
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Player)){
+            return false;
+        }
+        if(((Player) o).getUid().equals(this.getUid())){
+            return true;
+        }
+        return false;
+    }
+
 }

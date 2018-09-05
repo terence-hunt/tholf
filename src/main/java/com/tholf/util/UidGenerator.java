@@ -12,16 +12,15 @@ import java.util.HashMap;
  * @author thunt
  */
 public class UidGenerator {
-    private static int counter=0;
-    static HashMap<String,Integer> counters = new HashMap<String, Integer>();
-    
-    public static synchronized String generateUid(String prefix){
-        if(!counters.containsKey(prefix)){
+
+    static HashMap<String, Integer> counters = new HashMap<String, Integer>();
+
+    public static synchronized String generateUid(String prefix) {
+        if (!counters.containsKey(prefix)) {
             counters.put(prefix, 100);
         }
         int x = counters.get(prefix);
-        counters.put(prefix, x+1);
+        counters.put(prefix, x + 1);
         return prefix + "_" + counters.get(prefix);
     }
-    
 }

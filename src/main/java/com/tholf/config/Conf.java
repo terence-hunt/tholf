@@ -60,14 +60,22 @@ public enum Conf {
      * @param key the key being looked up
      * @param def this will be returned if the value for the key does 
      * not exist.
+     * @return String the configuration value
      * 
      */
-    public String get(String key, String def){
+    public String getStringWithDefault(String key, String def){
         String value = def;
         if(defaultProps.contains(key)){
             value = defaultProps.getProperty(key);
         }
         return value;
+    }
+    
+    public String getString(String key){
+        if(defaultProps.contains(key)){
+            return defaultProps.getProperty(key);
+        }
+        throw new UnsupportedOperationException("Key: " + key + " does not exist in the configuration");
     }
 
 }
