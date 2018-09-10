@@ -5,6 +5,7 @@
  */
 package com.tholf.player;
 
+import com.tholf.player.dao.RobotPlayerDao;
 import java.sql.SQLException;
 
 /**
@@ -26,7 +27,16 @@ public class RobotPlayer extends Player {
         this.name = name;
         this.skillLevel = skillLevel;
         
-        dao = new RobotPlayerDaoImpl();
+        dao = new RobotPlayerDao();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) throws SQLException {
+        this.name = name;
+        dao.updatePlayer(this);
     }
 
     public Double getSkillLevel() {

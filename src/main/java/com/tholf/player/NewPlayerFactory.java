@@ -17,14 +17,16 @@ public class NewPlayerFactory implements PlayerFactory {
     String address;
     String sex;
     String email;
+    String tee;
 
-    public NewPlayerFactory(String username, String name, double handicap, String address, String sex, String email) {
+    public NewPlayerFactory(String username, String name, double handicap, String address, String sex, String email, String tee) {
         this.username = username;
         this.name = name;
         this.handicap = handicap;
         this.address = address;
         this.sex = sex;
         this.email = email;
+        this.tee = tee;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class NewPlayerFactory implements PlayerFactory {
             return p;
         }
 
-        return new HumanPlayer(username, name, address, handicap, sex, email);
+        return new HumanPlayer(username, name, address, handicap, sex, email, tee);
     }
 
 }

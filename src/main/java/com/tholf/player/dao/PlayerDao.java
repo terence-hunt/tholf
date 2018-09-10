@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tholf.player;
+package com.tholf.player.dao;
 
+import com.tholf.player.*;
 import java.sql.SQLException;
 import java.util.List;
 
 /**
  *
  * @author thunt
+ * @param <T>
  */
 public interface PlayerDao<T extends Player> 
  {

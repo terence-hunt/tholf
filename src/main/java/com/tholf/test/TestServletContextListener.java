@@ -34,6 +34,6 @@ public class TestServletContextListener implements ServletContextListener{
                 Player p = PlayerFactoryMgr.getPlayerFactory("U0001").create();
                 
                 // this is how you create a new player. 
-                Player p1 = PlayerFactoryMgr.getPlayerFactory("terence.hunt", "Terry", 12, "20 collingwood drive", "m", "t.a.hunt89@gmail.com").create();
+                Player p1 = PlayerFactoryMgr.getPlayerFactory("terence.hunt", "Terry", 12, "20 collingwood drive", "m", "t.a.hunt89@gmail.com","white").create();
 	}
 }

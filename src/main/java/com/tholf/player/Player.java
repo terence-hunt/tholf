@@ -7,6 +7,7 @@ package com.tholf.player;
 
 import com.tholf.config.Conf;
 import com.tholf.config.PlayerKeys;
+import com.tholf.player.dao.PlayerDao;
 import com.tholf.util.UID;
 import com.tholf.util.UidGenerator;
 import java.sql.SQLException;

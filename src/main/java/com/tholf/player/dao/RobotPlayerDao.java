@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tholf.player;
+package com.tholf.player.dao;
 
 import com.tholf.config.Conf;
 import com.tholf.config.PlayerKeys;
-import com.tholf.ds.TholfDs;
+import com.tholf.player.Player;
+import com.tholf.player.RobotPlayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,23 +21,39 @@ import java.util.Map;
  *
  * @author thunt
  */
-public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
+public class RobotPlayerDao extends Dao implements PlayerDao<RobotPlayer> {
 
-    private static final String playerTableSQL
-            = "SELECT uid,username,name,address,handicap,sex,email from " + Conf.PLAYER.getString(PlayerKeys.playerTable);
-    TholfDs ds = new TholfDs();
+    private static final HashMap<Integer,String> columns = new HashMap();
+    private static final String TABLE;
+    
+    static {
+        columns.put(0, "uid");
+        columns.put(1, "name");
+        columns.put(2, "skillLevel");
+        TABLE = Conf.PLAYER.getString(PlayerKeys.robotTable);
+    }
+
+    public RobotPlayerDao() {
+        super();
+        StringBuilder sb = new StringBuilder("SELECT ");
+        Iterator<String> it = columns.values().iterator();
+        while (it.hasNext()) {
+            sb.append(it.next());
+            sb.append(",");
+        }
+        sb.append(" from ");
+        sb.append(TABLE);
+        setSQL(sb.toString());
+    }
 
     @Override
-    public void updatePlayer(HumanPlayer p) throws SQLException {
+    public void updatePlayer(RobotPlayer p) throws SQLException {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", p.getName());
-        map.put("address", p.getAddress());
-        map.put("handicap", String.valueOf(p.getHandicap()));
-        map.put("sex", p.getSex());
-        map.put("email", p.getEmail());
+        map.put("skillLevel", String.valueOf(p.getSkillLevel()));
 
         StringBuilder sb = new StringBuilder("UPDATE ");
-        sb.append(Conf.PLAYER.getString(PlayerKeys.playerTable));
+        sb.append(Conf.PLAYER.getString(PlayerKeys.robotTable));
         sb.append(" set ");
 
         Iterator it = map.entrySet().iterator();
@@ -56,9 +73,9 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
     }
 
     @Override
-    public void deletePlayer(HumanPlayer p) throws SQLException {
+    public void deletePlayer(RobotPlayer p) throws SQLException {
         StringBuilder sb = new StringBuilder("DELETE from ");
-        sb.append(Conf.PLAYER.getString(PlayerKeys.playerTable));
+        sb.append(Conf.PLAYER.getString(PlayerKeys.robotTable));
         sb.append(" WHERE uid = '");
         sb.append(p.getUid());
         sb.append("'");
@@ -68,7 +85,7 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
 
     @Override
     public Player getPlayer(String uid) throws SQLException {
-        StringBuilder sb = new StringBuilder(playerTableSQL);
+        StringBuilder sb = new StringBuilder(SQL);
         sb.append(" WHERE uid = '");
         sb.append(uid);
         sb.append("'");
@@ -77,30 +94,23 @@ public class HumanPlayerDaoImpl implements PlayerDao<HumanPlayer> {
     }
 
     @Override
-    public List<HumanPlayer> getAllPlayers() throws SQLException {
-        StringBuilder sb = new StringBuilder(playerTableSQL);
+    public List<RobotPlayer> getAllPlayers() throws SQLException {
+        StringBuilder sb = new StringBuilder(SQL);
         sb.append(PlayerKeys.playerTable);
-
         ResultSet rs = ds.executeQuery(sb.toString());
-
-        List<HumanPlayer> l = new ArrayList<>();
-
+        List<RobotPlayer> l = new ArrayList<>();
         while (rs.next()) {
             l.add(buildPlayer(rs));
         }
         return l;
     }
 
-    private HumanPlayer buildPlayer(ResultSet rs) throws SQLException {
+    private RobotPlayer buildPlayer(ResultSet rs) throws SQLException {
         String uid = rs.getString(0);
-        String username = rs.getString(1);
-        String name = rs.getString(2);
-        String address = rs.getString(3);
-        double handicap = rs.getDouble(4);
-        String sex = rs.getString(5);
-        String email = rs.getString(6);
+        String name = rs.getString(1);
+        double skillLevel = rs.getDouble(2);
 
-        return new HumanPlayer(uid, username, name, address, handicap, sex, email);
+        return new RobotPlayer(uid, name, skillLevel);
     }
 
 }

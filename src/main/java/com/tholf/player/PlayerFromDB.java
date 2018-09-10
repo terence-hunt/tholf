@@ -31,8 +31,9 @@ public class PlayerFromDB implements PlayerFactory {
         double handicap = 0d;
         String sex = null;
         String email = null;
+        String tee = null;
         
-        return new HumanPlayer(uid, username, name, handicap, sex, email);
+        return new HumanPlayer(uid, username, name, handicap, sex, email, tee);
         
     }
 
