@@ -17,8 +17,8 @@ import java.util.List;
  */
 public interface GolfCourseDao<T extends GolfCourse> 
  {
-    void updateGolfCourse(T p) throws SQLException;
-    void deleteGolfCourse(T p) throws SQLException;
+    void updateGolfCourse(T g) throws SQLException;
+    void deleteGolfCourse(T g) throws SQLException;
     Player getGolfCourse(String uid) throws SQLException;
     List<T> getAllGolfCourses() throws SQLException;
 
