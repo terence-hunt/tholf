@@ -23,7 +23,7 @@ public abstract class Dao {
         return SQL;
     }
 
-    void setSQL(String SQL) {
+    final void setSQL(String SQL) {
         this.SQL = SQL;
     }
     

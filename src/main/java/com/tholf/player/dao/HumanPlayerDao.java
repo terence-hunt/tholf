@@ -23,25 +23,25 @@ import java.util.Map;
  */
 public class HumanPlayerDao extends Dao implements PlayerDao<HumanPlayer> {
 
-    private static final HashMap<Integer,String> COLUMNS = new HashMap();
+    private static final HashMap<String, Integer> COLUMNS = new HashMap();
     private static final String TABLE;
-    
+
     static {
-        COLUMNS.put(0, "uid");
-        COLUMNS.put(1, "username");
-        COLUMNS.put(2, "name");
-        COLUMNS.put(3, "address");
-        COLUMNS.put(4, "handicap");
-        COLUMNS.put(5, "sex");
-        COLUMNS.put(6, "email");
-        COLUMNS.put(7, "tee");
+        COLUMNS.put("player_id", 0);
+        COLUMNS.put("username", 1);
+        COLUMNS.put("name", 2);
+        COLUMNS.put("address", 3);
+        COLUMNS.put("handicap", 4);
+        COLUMNS.put("sex", 5);
+        COLUMNS.put("email", 6);
+        COLUMNS.put("tee", 7);
         TABLE = Conf.PLAYER.getString(PlayerKeys.playerTable);
     }
 
     public HumanPlayerDao() {
         super();
         StringBuilder sb = new StringBuilder("SELECT ");
-        Iterator<String> it = COLUMNS.values().iterator();
+        Iterator<String> it = COLUMNS.keySet().iterator();
         while (it.hasNext()) {
             sb.append(it.next());
             sb.append(",");
@@ -98,7 +98,11 @@ public class HumanPlayerDao extends Dao implements PlayerDao<HumanPlayer> {
         sb.append(uid);
         sb.append("'");
         ResultSet rs = ds.executeQuery(sb.toString());
-        return buildPlayer(rs);
+        if (rs.first()) {
+            return buildPlayer(rs);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -117,7 +121,7 @@ public class HumanPlayerDao extends Dao implements PlayerDao<HumanPlayer> {
     }
 
     private HumanPlayer buildPlayer(ResultSet rs) throws SQLException {
-        String uid = rs.getString(COLUMNS.get("uid"));
+        String uid = rs.getString(COLUMNS.get("player_id"));
         String username = rs.getString(COLUMNS.get("username"));
         String name = rs.getString(COLUMNS.get("name"));
         String address = rs.getString(COLUMNS.get("address"));

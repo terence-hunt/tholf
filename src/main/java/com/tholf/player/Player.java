@@ -43,16 +43,20 @@ public abstract class Player implements UID {
         this.name = name;
         dao.updatePlayer(this);
     }
-    
+
     @Override
-    public boolean equals(Object o){
-        if(!(o instanceof Player)){
+    public boolean equals(Object o) {
+        if (!(o instanceof Player)) {
             return false;
         }
-        if(((Player) o).getUid().equals(this.getUid())){
+        if (((Player) o).getUid().equals(this.getUid())) {
             return true;
         }
         return false;
+    }
+
+    public void deletePlayer() throws SQLException {
+        dao.deletePlayer(this);
     }
 
 }

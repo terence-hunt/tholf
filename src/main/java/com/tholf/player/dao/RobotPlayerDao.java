@@ -23,20 +23,20 @@ import java.util.Map;
  */
 public class RobotPlayerDao extends Dao implements PlayerDao<RobotPlayer> {
 
-    private static final HashMap<Integer,String> columns = new HashMap();
+    private static final HashMap<String, Integer> COLUMNS = new HashMap();
     private static final String TABLE;
-    
+
     static {
-        columns.put(0, "uid");
-        columns.put(1, "name");
-        columns.put(2, "skillLevel");
+        COLUMNS.put("player_id", 0);
+        COLUMNS.put("name", 1);
+        COLUMNS.put("skillLevel", 2);
         TABLE = Conf.PLAYER.getString(PlayerKeys.robotTable);
     }
 
     public RobotPlayerDao() {
         super();
         StringBuilder sb = new StringBuilder("SELECT ");
-        Iterator<String> it = columns.values().iterator();
+        Iterator<String> it = COLUMNS.keySet().iterator();
         while (it.hasNext()) {
             sb.append(it.next());
             sb.append(",");
@@ -106,9 +106,9 @@ public class RobotPlayerDao extends Dao implements PlayerDao<RobotPlayer> {
     }
 
     private RobotPlayer buildPlayer(ResultSet rs) throws SQLException {
-        String uid = rs.getString(0);
-        String name = rs.getString(1);
-        double skillLevel = rs.getDouble(2);
+        String uid = rs.getString(COLUMNS.get("player_id"));
+        String name = rs.getString(COLUMNS.get("name"));
+        double skillLevel = rs.getDouble(COLUMNS.get("skillLevel"));
 
         return new RobotPlayer(uid, name, skillLevel);
     }
